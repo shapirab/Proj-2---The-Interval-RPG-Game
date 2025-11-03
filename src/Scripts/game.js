@@ -9,6 +9,7 @@ export default class Game {
 
     draw(ctx){
         this.world.drawGrid(ctx);
+        this.world.drawCollisionMap(ctx);
     }
 
 }

@@ -3,8 +3,8 @@ import Game from './game.js';
 export const GAME_WIDTH = window.innerWidth * 0.7;
 export const GAME_HEIGHT = window.innerHeight;
 export const TILE_SIZE = 64;
-export const ROWS = Math.floor(GAME_WIDTH / TILE_SIZE);
-export const COLUMNS = Math.floor(GAME_HEIGHT / TILE_SIZE);
+export const ROWS = Math.floor(GAME_HEIGHT / TILE_SIZE);
+export const COLUMNS = Math.floor(GAME_WIDTH / TILE_SIZE);
 
 
 window.addEventListener('load', () => {
