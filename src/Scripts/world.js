@@ -6,7 +6,7 @@ export default class World {
     constructor(){
         this.collision = [];
         this.createEmptyCollision();
-        this.level_1 = this.addLevelNoteMap(5);
+        this.level_1 = this.addLevelNoteMap(5, 2);
     }
 
     createEmptyCollision(){
@@ -17,18 +17,39 @@ export default class World {
         }
     }
 
-    addLevelNoteMap(notesInMap){
+    addLevelNoteMap(notesInMap, paths){
         let startRow = ROWS - 1;
         let startCol = Math.floor(COLUMNS / 2);
 
-        for(let i = 0; i < notesInMap; i++){
-            let row = startRow - i;
-            console.log('addLevelNoteMap(). row: ', row)
-            let col = startCol + i;
-           
-            if (row >= 0 && col < COLUMNS) {
-                const index = row * COLUMNS + col;              
-                this.collision[index] = 1;
+        for(let p = 0; p < paths; p++){
+            let row = startRow;
+            let col = startCol;
+    
+            for(let i = 0; i < notesInMap; i++){        
+                if (row >= 0 && col < COLUMNS) {
+                    const index = row * COLUMNS + col;              
+                    this.collision[index] = 1;
+                }
+                row--;
+                let direction = Math.random() < 0.5 ? 1 : -1;
+                let nextCol = col + direction;
+
+                if (nextCol >= 0 && nextCol < COLUMNS){
+                    let nextIndex = row * COLUMNS + nextCol;
+                    if (this.collision[nextIndex] === 0) {
+                        col = nextCol; // safe to move
+                    } else {
+                    // try the opposite direction
+                        let altCol = col - direction;
+                        if (altCol >= 0 && altCol < COLUMNS) {
+                            const altIndex = row * COLUMNS + altCol;
+                            if (this.collision[altIndex] === 0) {
+                                col = altCol;
+                            }
+                            // else: stuck, stay in same column
+                        }
+                    }
+                }
             }
         }
     }
